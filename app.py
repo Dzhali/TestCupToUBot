@@ -34,9 +34,10 @@ def respond():
    else:
        try:
            # clear the message we got from any non alphabets
-           text = re.sub(r"\W", "_", text)
+           # text = re.sub(r"\W", "_", text)
            # create the api link for the avatar based on http://avatars.adorable.io/
-           url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
+           url = "https://placekitten.com/700/{}".format(text.strip())
+           #url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
            # reply with a photo to the name the user sent,
            # note that you can send photos by url and telegram will fetch it for you
            bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
