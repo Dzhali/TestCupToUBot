@@ -1,9 +1,0 @@
-source is a shell command designed for users running on Linux (or any Posix, but whatever, not Windows).
-
-On Windows, virtualenv creates a .bat/.ps1 file, so you should run venv\Scripts\activate instead 
-(per the virtualenv documentation on the activate script).
-
-Just run activate, without an extension, so the right file will get used regardless of whether you're using cmd.exe or PowerShell.
-
-TestCupToUBot
-5096937519:AAGPXPOeLypH2c8f3sV1leJhZRFDxAeOT-Y
