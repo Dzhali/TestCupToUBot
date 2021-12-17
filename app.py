@@ -2,7 +2,8 @@
 from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
-from wayforpay import WayForPayAPI
+import wayforpay
+#from wayforpay import WayForPayAPI
  
 global bot
 global TOKEN
