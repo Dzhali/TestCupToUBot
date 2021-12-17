@@ -10,9 +10,9 @@ TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
-wayForPay = WayForPay(merchant_account = "www_instagram_com613" 
+wayForPayApi = WayForPay.Api(merchant_account = "www_instagram_com613" 
                          , merchant_key = "c64703e56c0d9263b5941067764b6433767b2d24")
-                         #, merchant_domain = "www.instagram.com")
+                         , merchant_domain = "www.instagram.com")
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
@@ -60,7 +60,7 @@ def respond():
               "orderReference": "WFPBI-61bc66c6a7677",
               "email": "likadgani@gmail.com"
           }
-           response = wayForPay.api._query(invoice_data)   
+           response = wayForPayApi._query(invoice_data)   
            
        except Exception:
            # if things went wrong
