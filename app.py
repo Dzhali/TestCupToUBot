@@ -11,7 +11,7 @@ bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
 wayForPayApi = WayForPay.Api(merchant_account = "www_instagram_com613" 
-                         , merchant_key = "c64703e56c0d9263b5941067764b6433767b2d24")
+                         , merchant_key = "c64703e56c0d9263b5941067764b6433767b2d24"
                          , merchant_domain = "www.instagram.com")
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
