@@ -61,6 +61,7 @@ def respond():
               "email": "likadgani@gmail.com"
           }
            response = wayForPayApi._query(invoice_data)   
+           bot.sendMessage(chat_id=chat_id, text=response.json, reply_to_message_id=msg_id)
            
        except Exception:
            # if things went wrong
