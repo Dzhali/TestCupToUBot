@@ -73,7 +73,7 @@ def respond():
                }
            url = checkout.url(data).get('checkout_url')
            
-           bot.sendMessage(chat_id=chat_id, text=url, reply_to_message_id=msg_id)
+           bot.sendMessage(chat_id=chat_id, text=str(url), reply_to_message_id=msg_id)
            
        except Exception:
            # if things went wrong
