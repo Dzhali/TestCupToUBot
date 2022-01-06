@@ -3,7 +3,9 @@ from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
 from wayforpay import Api
- 
+
+from cloudipsp import Api, Checkout
+
 global bot
 global TOKEN
 TOKEN = bot_token
@@ -48,7 +50,7 @@ def respond():
            bot.sendMessage(chat_id=chat_id, text=request.json, reply_to_message_id=msg_id)
            
            # PAYMENT TEST
-           invoice_data = {
+           """invoice_data = {
               "requestType": "CREATE",
               "merchantAccount": "www_instagram_com613",
               "merchantPassword": "c64703e56c0d9263b5941067764b6433767b2d24",
@@ -60,8 +62,19 @@ def respond():
               "orderReference": "WFPBI-61bc66c6a7677",
               "email": "likadgani@gmail.com"
           }
-           response = wayForPayApi._query(invoice_data)   
-           bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
+           response = wayForPayApi._query(invoice_data) """
+           
+           # FONDY
+           api = Api(merchant_id=1396424,
+           secret_key='test')
+           checkout = Checkout(api=api)
+           data = {
+               "currency": "USD",
+               "amount": 10000
+               }
+           url = checkout.url(data).get('checkout_url')
+           
+           bot.sendMessage(chat_id=chat_id, text=url, reply_to_message_id=msg_id)
            
        except Exception:
            # if things went wrong
