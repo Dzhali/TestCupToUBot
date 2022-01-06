@@ -3,7 +3,7 @@ from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
 
-from cloudipsp import Api, Checkout
+
 
 global bot
 global TOKEN
@@ -64,16 +64,7 @@ def respond():
            response = wayForPayApi._query(invoice_data) """
            
            # FONDY
-           api = Api(merchant_id=1396424,
-           secret_key='test')
-           checkout = Checkout(api=api)
-           data = {
-               "currency": "USD",
-               "amount": 10000
-               }
-           url = checkout.url(data).get('checkout_url')
-           
-          # bot.sendMessage(chat_id=chat_id, text=str(url), reply_to_message_id=msg_id)
+          
            
        except Exception:
            # if things went wrong
