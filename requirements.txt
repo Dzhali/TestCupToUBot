@@ -4,7 +4,6 @@ certifi==2021.10.8
 chardet==3.0.4
 charset-normalizer==2.0.9
 click==8.0.3
-cloudipsp==1.0.3
 colorama==0.4.4
 Flask==2.0.2
 gunicorn==20.1.0
