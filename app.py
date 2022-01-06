@@ -2,7 +2,6 @@
 from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
-from wayforpay import Api
 
 from cloudipsp import Api, Checkout
 
@@ -12,9 +11,9 @@ TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
-wayForPayApi = Api(merchant_account = "www_instagram_com613" 
-                         , merchant_key = "c64703e56c0d9263b5941067764b6433767b2d24"
-                         , merchant_domain = "www.instagram.com")
+#wayForPayApi = Api(merchant_account = "www_instagram_com613" 
+                       #  , merchant_key = "c64703e56c0d9263b5941067764b6433767b2d24"
+                       #  , merchant_domain = "www.instagram.com")
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
