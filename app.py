@@ -3,7 +3,7 @@ from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
 
-from cloudipsp import Api, Checkout
+
 
 from db import ClientDatabase
 
