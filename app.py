@@ -26,6 +26,9 @@ def respond():
    print("got text message :", text)
    # the first time you chat with the bot AKA the welcoming message
    if text == "/start":
+       client_db = ClientDatabase("clientDB.db")
+       client_db.add_user(100, 0)           
+       client_db.add_user(120, 0) 
        # print the welcoming message
        bot_welcome = """
        Welcome to coolAvatar bot, the bot is using the service from http://avatars.adorable.io/ to generate cool looking avatars based on the name you enter so please enter a name and the bot will reply with an avatar for your name.
