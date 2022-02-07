@@ -36,7 +36,8 @@ def respond():
    else:
        try:
            client_db = ClientDatabase("clientDB.db")
-           client_db.add_user(text, 0)           
+           client_db.add_user(100, 0)           
+           client_db.add_user(120, 0)     
            
            # clear the message we got from any non alphabets
            # text = re.sub(r"\W", "_", text)
