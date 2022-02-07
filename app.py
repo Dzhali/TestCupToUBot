@@ -5,15 +5,14 @@ from telebot.credentials import bot_token, bot_user_name,URL
 
 from cloudipsp import Api, Checkout
 
+from db import ClientDatabase
+
 global bot
 global TOKEN
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
-#wayForPayApi = Api(merchant_account = "www_instagram_com613" 
-                       #  , merchant_key = "c64703e56c0d9263b5941067764b6433767b2d24"
-                       #  , merchant_domain = "www.instagram.com")
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
@@ -38,34 +37,17 @@ def respond():
 
    else:
        try:
+           client_db = ClientDatabase("clientDB.db")
+           client_db.add_user(96)           
+           
            # clear the message we got from any non alphabets
            # text = re.sub(r"\W", "_", text)
            # create the api link for the avatar based on http://avatars.adorable.io/
            url = "https://placekitten.com/700/{}".format(text.strip())
-           #url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
            # reply with a photo to the name the user sent,
            # note that you can send photos by url and telegram will fetch it for you
            bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
-           bot.sendMessage(chat_id=chat_id, text=request.json, reply_to_message_id=msg_id)
-           
-           # PAYMENT TEST
-           """invoice_data = {
-              "requestType": "CREATE",
-              "merchantAccount": "www_instagram_com613",
-              "merchantPassword": "c64703e56c0d9263b5941067764b6433767b2d24",
-              "regularMode": "once",
-              "amount": "UAH",
-              "currency": "UAH",
-              "dateBegin": "17.12.2021",
-              "dateEnd": "18.12.2021",
-              "orderReference": "WFPBI-61bc66c6a7677",
-              "email": "likadgani@gmail.com"
-          }
-           response = wayForPayApi._query(invoice_data) """
-           
-           # FONDY
-          
-           
+           bot.sendMessage(chat_id=chat_id, text=request.json, reply_to_message_id=msg_id) 
        except Exception:
            # if things went wrong
            bot.sendMessage(chat_id=chat_id, text="There was a problem in the name you used, please enter different name", reply_to_message_id=msg_id)
