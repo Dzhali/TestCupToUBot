@@ -19,8 +19,8 @@ class ClientDatabase:
     
     def add_user(self, user_id, state):
         with self.connection:
-            self.cursor.execute("INSERT INTO 'users' (user_id, state) VALUES (?)", (user_id, state))
+            self.cursor.execute("INSERT INTO 'users' ('user_id', 'state') VALUES (?)", (user_id, state,))
         
     def set_state(self, user_id, state):
         with self.connection:
-            return self.cursor.execute("UPDATE 'users' SET 'state' = ? WHERE 'user_id' = ?", (state, user_id))
+            return self.cursor.execute("UPDATE 'users' SET 'state' = ? WHERE 'user_id' = ?", (state, user_id,))
