@@ -3,8 +3,6 @@ from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
 
-
-
 from db import ClientDatabase
 
 global bot
@@ -38,7 +36,7 @@ def respond():
    else:
        try:
            client_db = ClientDatabase("clientDB.db")
-           client_db.add_user(96)           
+           client_db.add_user(96, 0)           
            
            # clear the message we got from any non alphabets
            # text = re.sub(r"\W", "_", text)
