@@ -27,7 +27,6 @@ def respond():
    # for debugging purposes only
    print("got text message :", text)
    
-   
    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
    db_path = os.path.join(BASE_DIR, "clientDB.db")
    print("------------ DB PATH: ", db_path)
