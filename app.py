@@ -4,6 +4,8 @@ import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
 
 from db import ClientDatabase
+import os.path
+
 
 global bot
 global TOKEN
@@ -24,9 +26,14 @@ def respond():
    text = update.message.text.encode('utf-8').decode()
    # for debugging purposes only
    print("got text message :", text)
+   
+   
+   BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+   db_path = os.path.join(BASE_DIR, "clientDB.db")
+   print("------------ DB PATH: ", db_path)
    # the first time you chat with the bot AKA the welcoming message
    if text == "/start":
-       client_db = ClientDatabase("clientDB.db")
+       client_db = ClientDatabase(db_path)
        client_db.add_user(100, 0)           
        client_db.add_user(120, 0) 
        # print the welcoming message
@@ -38,7 +45,7 @@ def respond():
 
    else:
        try:
-           client_db = ClientDatabase("clientDB.db")
+           client_db = ClientDatabase(db_path)
            client_db.add_user(100, 0)           
            client_db.add_user(120, 0)     
            
