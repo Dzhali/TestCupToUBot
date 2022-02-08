@@ -6,7 +6,6 @@ from telebot.credentials import bot_token, bot_user_name,URL
 from db import ClientDatabase
 import os.path
 
-
 global bot
 global TOKEN
 TOKEN = bot_token
