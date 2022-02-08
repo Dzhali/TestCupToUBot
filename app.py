@@ -32,7 +32,7 @@ def respond():
    print("------------ DB PATH: ", db_path)
    # the first time you chat with the bot AKA the welcoming message
    if text == "/start":
-       client_db = ClientDatabase(db_path)
+       client_db = ClientDatabase("clientDB.db")
        client_db.add_user(100, 0)           
        client_db.add_user(120, 0) 
        # print the welcoming message
@@ -44,7 +44,7 @@ def respond():
 
    else:
        try:
-           client_db = ClientDatabase(db_path)
+           client_db = ClientDatabase("clientDB.db")
            client_db.add_user(100, 0)           
            client_db.add_user(120, 0)     
            
