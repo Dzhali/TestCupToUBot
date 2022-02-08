@@ -3,7 +3,7 @@ from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
 
-#from db import ClientDatabase
+from db import ClientDatabase
 #import os.path
 
 global bot
@@ -33,12 +33,12 @@ def respond():
    
    #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
    #db_path = os.path.join(BASE_DIR, "clientDB.db")
-   print("------------ DB PATH: ", db_path)
+   #print("------------ DB PATH: ", db_path)
    # the first time you chat with the bot AKA the welcoming message
    if text == "/start":
-       #client_db = ClientDatabase("clientDB.db")
-       #client_db.add_user(100, 0)           
-       #client_db.add_user(120, 0) 
+       client_db = ClientDatabase("clientDB.db")
+       client_db.add_user(100, 0)           
+       client_db.add_user(120, 0) 
        # print the welcoming message
        bot_welcome = """
        Welcome to coolAvatar bot, the bot is using the service from http://avatars.adorable.io/ to generate cool looking avatars based on the name you enter so please enter a name and the bot will reply with an avatar for your name.
