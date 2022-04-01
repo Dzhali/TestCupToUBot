@@ -1,8 +1,12 @@
 # import everything
 from flask import Flask, request #flask for webhook
+
+#COMPARE
 import telegram
-from telebot.credentials import bot_token, bot_user_name,URL
-import psycopg2 # for working with db
+#import telebot
+
+from telebot.credentials import bot_token, bot_user_name, URL, DB_URI
+import psycopg2 #for working with db
 
 from db import ClientDatabase
 #import os.path
@@ -10,42 +14,58 @@ from db import ClientDatabase
 global bot
 global TOKEN
 TOKEN = bot_token
-bot = telegram.Bot(token=TOKEN)
+
+#COMPARE
+bot = telegram.Bot(token=TOKEN) #mine
+youtubebot = telebot.TeleBot(TOKEN) #new
 
 app = Flask(__name__)
 
 db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
 
+   #COMPARE answer to start  закомментить старт основной и редирект, и удостовериться что без редиректа не работает
+@youtubebot.message_handler(commands=["start"])
+def start(message):
+    name = message.from_user.username
+    youtubebot.reply_to(message, f"Hello!!!") 
+
+
 @app.route('/{}'.format(TOKEN), methods=['POST'])
+def redirect():
+    json_str = request.get_data().decode("utf-8")
+    update = telebot.types.Update.de_json(json_str)
+    youtubebot.process_new_updates([update])
+    return "!", 200    
+
+
+#@app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
-   # retrieve the message in JSON and then transform it to Telegram object
+   #retrieve the message in JSON and then transform it to Telegram object
    update = telegram.Update.de_json(request.get_json(force=True), bot)
 
-   print("update: ", update)
-   print("request.json: ", request.json)
-   print("request.get_json(force=True): ", request.get_json(force=True))
+   #print("request.json: ", request.json)
     
    chat_id = update.message.chat.id
    msg_id = update.message.message_id
-
 
    # Telegram understands UTF-8, so encode text for unicode compatibility
    text = update.message.text.encode('utf-8').decode()
    # for debugging purposes only
    print("got text message :", text)
    
-   #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-   #db_path = os.path.join(BASE_DIR, "clientDB.db")
-   #print("------------ DB PATH: ", db_path)
    # the first time you chat with the bot AKA the welcoming message
-   if text == "/start":
-       # print the welcoming message
+   if text == "/start": #тут мы сразу принимаем, а в мессадж хендлере это работает через редирект
        bot_welcome = """
        Welcome to coolAvatar bot, the bot is using the service from http://avatars.adorable.io/ to generate cool looking avatars based on the name you enter so please enter a name and the bot will reply with an avatar for your name.
        """
        # send the welcoming message
        bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
+
+        
+ 
+
+
 
    else:
        try:
