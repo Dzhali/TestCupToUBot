@@ -1,7 +1,8 @@
 # import everything
-from flask import Flask, request
+from flask import Flask, request #flask for webhook
 import telegram
 from telebot.credentials import bot_token, bot_user_name,URL
+import psycopg2 # for working with db
 
 from db import ClientDatabase
 #import os.path
@@ -12,6 +13,9 @@ TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
+
+db_connection = psycopg2.connect(DB_URI, sslmode="require")
+db_object = db_connection.cursor()
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
@@ -36,9 +40,6 @@ def respond():
    #print("------------ DB PATH: ", db_path)
    # the first time you chat with the bot AKA the welcoming message
    if text == "/start":
-       client_db = ClientDatabase("clientDB.db")
-       client_db.add_user(100, 0)           
-       client_db.add_user(120, 0) 
        # print the welcoming message
        bot_welcome = """
        Welcome to coolAvatar bot, the bot is using the service from http://avatars.adorable.io/ to generate cool looking avatars based on the name you enter so please enter a name and the bot will reply with an avatar for your name.
@@ -48,10 +49,6 @@ def respond():
 
    else:
        try:
-           #client_db = ClientDatabase("clientDB.db")
-           #client_db.add_user(100, 0)           
-           #client_db.add_user(120, 0)     
-           
            # clear the message we got from any non alphabets
            # text = re.sub(r"\W", "_", text)
            # create the api link for the avatar based on http://avatars.adorable.io/
@@ -60,6 +57,17 @@ def respond():
            # note that you can send photos by url and telegram will fetch it for you
            bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
            bot.sendMessage(chat_id=chat_id, text=request.json, reply_to_message_id=msg_id) 
+           
+           db_object.execute(f"SELECT number FROM users WHERE number = {text}")
+           result = db_object.fetchone()
+
+           if not result:
+              status = 1
+              db_object.execute("INSERT INTO users(number, status) VALUES (%s, %s)", (text, status))
+              db_connection.commit()
+              bot.sendMessage(chat_id=chat_id, text="db changed!", reply_to_message_id=msg_id)
+           else:
+               bot.sendMessage(chat_id=chat_id, text="db isn't changed!", reply_to_message_id=msg_id)
        except Exception:
            # if things went wrong
            bot.sendMessage(chat_id=chat_id, text="There was a problem in the name you used, please enter different name", reply_to_message_id=msg_id)
