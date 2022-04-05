@@ -2,8 +2,8 @@
 from flask import Flask, request #flask for webhook
 
 #COMPARE
-import telegram
-#import telebot
+import telegram  #mine
+import telebot #new
 
 from telebot.credentials import bot_token, bot_user_name, URL, DB_URI
 import psycopg2 #for working with db
