@@ -1,9 +1,7 @@
 # import everything
 from flask import Flask, request #flask for webhook
 
-#COMPARE
-import telegram  #mine
-import telebot #new
+import telegram
 
 from telebot.credentials import bot_token, bot_user_name, URL, DB_URI
 import psycopg2 #for working with db
@@ -15,31 +13,14 @@ global bot
 global TOKEN
 TOKEN = bot_token
 
-#COMPARE
-bot = telegram.Bot(token=TOKEN) #mine
-youtubebot = telebot.TeleBot(TOKEN) #new
+bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
 
 db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
 
-   #COMPARE answer to start  закомментить старт основной и редирект, и удостовериться что без редиректа не работает
-@youtubebot.message_handler(commands=["start"])
-def start(message):
-    name = message.from_user.username
-    youtubebot.reply_to(message, f"Hello!!!") 
-
-
 @app.route('/{}'.format(TOKEN), methods=['POST'])
-def redirect():
-    json_str = request.get_data().decode("utf-8")
-    update = telebot.types.Update.de_json(json_str)
-    youtubebot.process_new_updates([update])
-    return "!", 200    
-
-
-#@app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
    #retrieve the message in JSON and then transform it to Telegram object
    update = telegram.Update.de_json(request.get_json(force=True), bot)
@@ -61,11 +42,6 @@ def respond():
        """
        # send the welcoming message
        bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
-
-        
- 
-
-
 
    else:
        try:
@@ -94,7 +70,7 @@ def respond():
            
    return 'ok'
 
-#@app.route('/setwebhook', methods=['GET', 'POST']) temporary comment
+@app.route('/setwebhook', methods=['GET', 'POST'])
 def set_webhook():
     # we use the bot object to link the bot to our app which live
     # in the link provided by URL
@@ -105,16 +81,11 @@ def set_webhook():
     else:
         return "webhook setup failed"
 
-#@app.route('/')
-#def index():
-    #return '.'
+@app.route('/')
+def index():
+    return '.'
 if __name__ == '__main__':
     # note the threaded arg which allow
     # your app to have more than one thread
-    
-    #new
-    youtubebot.remove_webhook()
-    youtubebot.set_webhook(url='{URL}{HOOK}'.format(URL=URL, HOOK=TOKEN))
-    #new end
     app.run(threaded=True)
     
