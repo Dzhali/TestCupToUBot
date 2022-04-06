@@ -94,7 +94,7 @@ def respond():
            
    return 'ok'
 
-@app.route('/setwebhook', methods=['GET', 'POST'])
+#@app.route('/setwebhook', methods=['GET', 'POST']) temporary comment
 def set_webhook():
     # we use the bot object to link the bot to our app which live
     # in the link provided by URL
@@ -105,10 +105,16 @@ def set_webhook():
     else:
         return "webhook setup failed"
 
-@app.route('/')
-def index():
-    return '.'
+#@app.route('/')
+#def index():
+    #return '.'
 if __name__ == '__main__':
     # note the threaded arg which allow
     # your app to have more than one thread
+    
+    #new
+    youtubebot.remove_webhook()
+    youtubebot.set_webhook(url='{URL}{HOOK}'.format(URL=URL, HOOK=TOKEN))
+    #new end
     app.run(threaded=True)
+    
