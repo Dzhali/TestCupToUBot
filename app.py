@@ -7,9 +7,9 @@ Created on Wed Apr  6 22:13:16 2022
 import os
 from flask import Flask, request #flask for webhook
 
-import telebot #new
+import telebot
 
-from telebot.credentials import bot_token, bot_user_name, URL, DB_URI
+from mybot.credentials import bot_token, bot_user_name, URL, DB_URI
 import psycopg2 #for working with db
 
 
