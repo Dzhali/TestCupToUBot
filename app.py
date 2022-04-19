@@ -33,6 +33,11 @@ def start(message):
 
 @bot.message_handler(commands=["number"])
 def phone(message):
+    #test
+    bot.reply_to(message, f"number!!!")
+    bot.send_message(message.chat.id, 'Number')
+    bot.sendMessage(chat_id=chat_id, text="Number", reply_to_message_id=message.message_id)
+    
     #формирование запроса к пользователю
     keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
     button_phone = types.KeyboardButton(text='Send phone',request_contact=True) #создаем кнопку
